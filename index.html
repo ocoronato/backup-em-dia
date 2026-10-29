@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Backup em Dia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Guia educativo sobre backup e recuperação de dados para pequenas empresas, comerciantes e MEIs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Biblioteca de ícones (SVG sprite) -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></symbol>
+    <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.6c2.4.2 4.2 1.9 5 4.9"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.4 10.5a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5l9-4.5 9 4.5v9l-9 4.5-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13"/><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 19h10a4.5 4.5 0 0 0 .7-8.95A6 6 0 0 0 6.1 9.2 5 5 0 0 0 7 19z"/></symbol>
+    <symbol id="i-hdd" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="16.5" cy="12" r="1.2"/><path d="M6.5 12h5"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="7" rx="1.5"/><rect x="4" y="14" width="16" height="7" rx="1.5"/><path d="M8 6.5h.01M8 17.5h.01M12 10v4M11 6.5h5M11 17.5h5"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-restore" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.7-6.2L3.5 8.5"/><path d="M3.5 3.5v5h5"/><path d="M12 8v4l3 2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3M12 15v2"/></symbol>
+    <symbol id="i-ransom" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M7.5 10V7.5a4.5 4.5 0 0 1 9 0V10"/><path d="M10 14l4 4M14 14l-4 4"/></symbol>
+    <symbol id="i-hdd-fail" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M11 6l-2 5h4l-2 7"/><circle cx="17" cy="12" r="1.2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 3c.5 3 4.5 5.2 4.5 10a4.5 4.5 0 0 1-9 0c0-2.2 1-3.6 2.2-4.6.1 1.8.9 3 2.1 3.2-.4-2.9-.4-5.6.2-8.6z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.5h.01"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 5.5l6.5 6.5-6.5 6.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 8a8.5 8.5 0 0 0-15.5-.5M4 16a8.5 8.5 0 0 0 15.5.5"/><path d="M20 3.5V8h-4.5M4 20.5V16h4.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 8h8v13M2 21h20M7.5 8h1M7.5 12h1M7.5 16h1M15.5 12h1M15.5 16h1"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14.5 8.5l2 2"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ================= CABEÇALHO / MENU FIXO ================= -->
+<header class="site-header" id="topo">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" aria-label="Backup em Dia, voltar ao início">
+      <span class="brand-mark"><svg><use href="#i-shield-check"/></svg></span>
+      <span class="brand-name">Backup <strong>em Dia</strong></span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">
+      <svg class="ico-open"><use href="#i-menu"/></svg>
+      <svg class="ico-close"><use href="#i-x"/></svg>
+    </button>
+    <nav class="main-nav" id="menu-principal" aria-label="Seções do guia">
+      <a href="#o-que-e">O que é</a>
+      <a href="#dados">Dados</a>
+      <a href="#armazenamento">Onde guardar</a>
+      <a href="#regra-321">Regra 3-2-1</a>
+      <a href="#rotina">Rotina</a>
+      <a href="#restauracao">Restauração</a>
+      <a href="#riscos">Riscos</a>
+      <a href="#checklist" class="nav-cta">Checklist</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+<!-- ================= 1. HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow eyebrow-light">Guia para pequenos negócios e MEIs</p>
+      <h1>Seus dados estão realmente protegidos?</h1>
+      <p class="hero-lead">Uma falha no computador, um ataque virtual ou um simples acidente podem comprometer todo o seu negócio. Aprenda a proteger suas informações com estratégias simples de backup e recuperação.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#o-que-e">Aprenda a proteger seus dados <svg><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-ghost" href="#regra-321">Conheça a regra 3-2-1</a>
+      </div>
+      <ul class="hero-points" aria-label="O que você vai aprender">
+        <li><svg><use href="#i-check"/></svg>O que copiar</li>
+        <li><svg><use href="#i-check"/></svg>Onde guardar</li>
+        <li><svg><use href="#i-check"/></svg>Como testar a recuperação</li>
+      </ul>
+    </div>
+
+    <!-- Ilustração: computador conectado à nuvem e ao HD externo -->
+    <figure class="hero-art" aria-label="Ilustração de um computador enviando arquivos protegidos para a nuvem e para um HD externo">
+      <svg viewBox="0 0 520 430" role="img" aria-hidden="true">
+        <defs>
+          <linearGradient id="g-screen" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#16406E"/>
+            <stop offset="1" stop-color="#0B2545"/>
+          </linearGradient>
+          <linearGradient id="g-cloud" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFFFF"/>
+            <stop offset="1" stop-color="#D7ECFB"/>
+          </linearGradient>
+        </defs>
+
+        <!-- grade de fundo -->
+        <g class="art-grid" stroke="#3BA4E8" stroke-opacity=".14">
+          <path d="M20 60h480M20 140h480M20 220h480M20 300h480M20 380h480"/>
+          <path d="M60 20v390M160 20v390M260 20v390M360 20v390M460 20v390"/>
+        </g>
+
+        <!-- linhas de transferência -->
+        <path class="flow" d="M200 210 C 220 140, 290 120, 340 128" fill="none" stroke="#7CC6F5" stroke-width="3" stroke-dasharray="8 9" stroke-linecap="round"/>
+        <path class="flow" d="M250 300 C 300 330, 330 345, 362 350" fill="none" stroke="#5FD3A0" stroke-width="3" stroke-dasharray="8 9" stroke-linecap="round"/>
+
+        <!-- nuvem -->
+        <g class="art-cloud">
+          <path d="M318 168h150a42 42 0 0 0 6-83.6A58 58 0 0 0 362 70a46 46 0 0 0-44 98z" fill="url(#g-cloud)" stroke="#BFE0F7" stroke-width="2"/>
+          <!-- escudo -->
+          <path d="M398 92l26 10v20c0 15-10 25-26 31-16-6-26-16-26-31v-20z" fill="#1E9E6A"/>
+          <path d="M387 122l8 8 15-17" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- monitor -->
+        <g class="art-monitor">
+          <rect x="40" y="190" width="230" height="150" rx="14" fill="#E9F1F9" stroke="#C9DAEA" stroke-width="2"/>
+          <rect x="52" y="202" width="206" height="118" rx="8" fill="url(#g-screen)"/>
+          <path d="M140 340h50l8 34h-66z" fill="#C9DAEA"/>
+          <rect x="112" y="372" width="106" height="10" rx="5" fill="#AFC6DC"/>
+          <!-- arquivos na tela -->
+          <g fill="#FFFFFF" fill-opacity=".92">
+            <path d="M74 222h28l10 10v40H74z"/>
+            <path d="M132 222h28l10 10v40h-38z"/>
+            <path d="M190 222h28l10 10v40h-38z"/>
+          </g>
+          <g stroke="#3BA4E8" stroke-width="3" stroke-linecap="round">
+            <path d="M82 246h20M82 255h20M82 264h12"/>
+            <path d="M140 246h20M140 255h20M140 264h12"/>
+            <path d="M198 246h20M198 255h20M198 264h12"/>
+          </g>
+          <rect x="74" y="292" width="162" height="8" rx="4" fill="#ffffff" fill-opacity=".15"/>
+          <rect class="art-progress" x="74" y="292" width="120" height="8" rx="4" fill="#5FD3A0"/>
+        </g>
+
+        <!-- HD externo -->
+        <g class="art-hdd">
+          <rect x="362" y="320" width="118" height="62" rx="12" fill="#E9F1F9" stroke="#C9DAEA" stroke-width="2"/>
+          <rect x="374" y="333" width="64" height="8" rx="4" fill="#3BA4E8" fill-opacity=".55"/>
+          <circle cx="458" cy="351" r="7" fill="#1E9E6A"/>
+          <rect x="374" y="358" width="40" height="6" rx="3" fill="#AFC6DC"/>
+        </g>
+
+        <!-- arquivos voando -->
+        <g class="art-file f1">
+          <rect x="250" y="120" width="40" height="48" rx="6" fill="#fff" stroke="#BFE0F7" stroke-width="2"/>
+          <path d="M260 136h20M260 145h20M260 154h12" stroke="#13315C" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <g class="art-file f2">
+          <rect x="296" y="290" width="36" height="44" rx="6" fill="#fff" stroke="#BEEBD6" stroke-width="2"/>
+          <path d="M305 305h18M305 313h18M305 321h10" stroke="#1E9E6A" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- cadeado -->
+        <g class="art-lock">
+          <circle cx="66" cy="120" r="34" fill="#ffffff" fill-opacity=".08" stroke="#7CC6F5" stroke-opacity=".5" stroke-width="2"/>
+          <rect x="52" y="116" width="28" height="22" rx="4" fill="#7CC6F5"/>
+          <path d="M57 116v-6a9 9 0 0 1 18 0v6" fill="none" stroke="#7CC6F5" stroke-width="4"/>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= 2. O QUE É BACKUP ================= -->
+<section class="section" id="o-que-e">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Conceito</p>
+      <h2>O que é backup?</h2>
+      <p class="lead">Backup é uma <strong>cópia de segurança</strong> dos arquivos e informações da empresa, guardada em outro lugar. Se o original for perdido, apagado ou danificado, você usa essa cópia para recuperar o que precisa.</p>
+    </header>
+
+    <div class="grid grid-3">
+      <article class="card benefit reveal">
+        <span class="icon-badge"><svg><use href="#i-copy"/></svg></span>
+        <h3>Uma cópia independente</h3>
+        <p>O backup fica separado do computador onde você trabalha, como em um HD externo ou em um serviço de nuvem. Se o computador parar, a cópia continua lá.</p>
+      </article>
+      <article class="card benefit reveal">
+        <span class="icon-badge"><svg><use href="#i-shield"/></svg></span>
+        <h3>Por que é importante</h3>
+        <p>Os dados podem ser perdidos a qualquer momento: por acidente, furto, falha do sistema, atualização malsucedida ou defeito no equipamento. O backup reduz esse transtorno.</p>
+      </article>
+      <article class="card benefit reveal">
+        <span class="icon-badge"><svg><use href="#i-restore"/></svg></span>
+        <h3>Como ajuda a recuperar</h3>
+        <p>Com o backup, você restaura o arquivo a partir de uma versão anterior e volta a trabalhar, em vez de refazer tudo do zero ou depender da sorte.</p>
+      </article>
+    </div>
+
+    <div class="situations reveal">
+      <h3>Situações em que um backup salva a empresa</h3>
+      <ul class="situation-list">
+        <li><svg><use href="#i-monitor"/></svg><span><strong>O computador não liga mais.</strong> Os cadastros de clientes são recuperados em outra máquina.</span></li>
+        <li><svg><use href="#i-trash"/></svg><span><strong>Alguém apagou a planilha do caixa.</strong> A versão de ontem é restaurada em minutos.</span></li>
+        <li><svg><use href="#i-laptop"/></svg><span><strong>O notebook foi furtado.</strong> Os contratos e notas continuam guardados na nuvem.</span></li>
+        <li><svg><use href="#i-ransom"/></svg><span><strong>Um vírus bloqueou os arquivos.</strong> Uma cópia que estava desconectada permite recomeçar.</span></li>
+      </ul>
+    </div>
+
+    <aside class="callout callout-info reveal">
+      <span class="callout-icon"><svg><use href="#i-sync"/></svg></span>
+      <div>
+        <h3>Sincronizar não é o mesmo que fazer backup</h3>
+        <p>Pastas sincronizadas (como as do Google Drive ou do OneDrive) repetem na nuvem o que acontece no computador. Se um arquivo é apagado ou corrompido em um lugar, o problema pode aparecer no outro. Para servir como backup, use também o histórico de versões e a lixeira do serviço, ou um programa de backup que guarde cópias antigas.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 3. QUAIS DADOS PROTEGER ================= -->
+<section class="section section-alt" id="dados">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Inventário</p>
+      <h2>Quais dados precisam ser protegidos?</h2>
+      <p class="lead">Comece pelo que a empresa <strong>não consegue funcionar sem</strong>. Uma planilha simples, listando cada tipo de dado, onde ele está e quem tem acesso, já ajuda a organizar o backup.</p>
+    </header>
+
+    <div class="grid grid-3 data-grid">
+      <article class="card data-card reveal">
+        <span class="icon-badge"><svg><use href="#i-users"/></svg></span>
+        <h3>Clientes</h3>
+        <p>Cadastros, contatos e históricos de atendimento e de compras.</p>
+      </article>
+      <article class="card data-card reveal">
+        <span class="icon-badge"><svg><use href="#i-receipt"/></svg></span>
+        <h3>Financeiro</h3>
+        <p>Notas fiscais, pagamentos, recebimentos e planilhas de controle.</p>
+      </article>
+      <article class="card data-card reveal">
+        <span class="icon-badge"><svg><use href="#i-cart"/></svg></span>
+        <h3>Vendas</h3>
+        <p>Pedidos, orçamentos e registros comerciais.</p>
+      </article>
+      <article class="card data-card reveal">
+        <span class="icon-badge"><svg><use href="#i-box"/></svg></span>
+        <h3>Estoque</h3>
+        <p>Produtos, quantidades e movimentações de entrada e saída.</p>
+      </article>
+      <article class="card data-card reveal">
+        <span class="icon-badge"><svg><use href="#i-file"/></svg></span>
+        <h3>Documentos</h3>
+        <p>Contratos, arquivos e documentos administrativos.</p>
+      </article>
+      <article class="card data-card reveal">
+        <span class="icon-badge"><svg><use href="#i-db"/></svg></span>
+        <h3>Sistemas</h3>
+        <p>Bancos de dados de programas de gestão e configurações importantes.</p>
+      </article>
+    </div>
+
+    <p class="tip reveal"><svg><use href="#i-search"/></svg><span><strong>Dica:</strong> não copie o que não é necessário. Selecionar bem o que entra no backup economiza espaço e deixa a cópia e a restauração mais rápidas. Lembre também dos e-mails e dos documentos em papel importantes.</span></p>
+  </div>
+</section>
+
+<!-- ================= 4. ONDE ARMAZENAR ================= -->
+<section class="section" id="armazenamento">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Armazenamento</p>
+      <h2>Onde armazenar os backups?</h2>
+      <p class="lead">Cada opção tem pontos fortes e limites. Na prática, o mais seguro é <strong>combinar</strong> mais de uma, como você verá na regra 3-2-1.</p>
+    </header>
+
+    <div class="grid grid-3 storage-grid">
+      <article class="card storage-card reveal">
+        <div class="storage-top">
+          <span class="icon-badge icon-badge-lg"><svg><use href="#i-cloud"/></svg></span>
+          <div>
+            <h3>Armazenamento em nuvem</h3>
+            <p class="storage-sub">Google Drive, Microsoft OneDrive ou serviços especializados de backup.</p>
+          </div>
+        </div>
+        <div class="pros">
+          <h4><svg><use href="#i-check"/></svg>Vantagens</h4>
+          <ul>
+            <li>Acesso remoto, de qualquer lugar com internet.</li>
+            <li>A cópia fica fora da empresa, protegida de incêndio ou furto no local.</li>
+            <li>Costuma permitir backup automático.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4><svg><use href="#i-alert"/></svg>Limitações</h4>
+          <ul>
+            <li>Depende de uma conexão estável com a internet.</li>
+            <li>Mais espaço geralmente significa pagar assinatura.</li>
+            <li>A conta precisa de senha forte e verificação em duas etapas.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card storage-card reveal">
+        <div class="storage-top">
+          <span class="icon-badge icon-badge-lg"><svg><use href="#i-hdd"/></svg></span>
+          <div>
+            <h3>HD ou SSD externo</h3>
+            <p class="storage-sub">Armazenamento físico ligado ao computador por cabo USB.</p>
+          </div>
+        </div>
+        <div class="pros">
+          <h4><svg><use href="#i-check"/></svg>Vantagens</h4>
+          <ul>
+            <li>Cópia e restauração rápidas, sem depender da internet.</li>
+            <li>Fácil de transportar e guardar em outro local.</li>
+            <li>Pode ficar desconectado, longe do alcance de vírus.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4><svg><use href="#i-alert"/></svg>Limitações</h4>
+          <ul>
+            <li>Também pode apresentar defeito, ser perdido ou furtado.</li>
+            <li>Alguém precisa lembrar de conectá-lo para o backup acontecer.</li>
+            <li>Deve ser criptografado e guardado em local seguro.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card storage-card reveal">
+        <div class="storage-top">
+          <span class="icon-badge icon-badge-lg"><svg><use href="#i-server"/></svg></span>
+          <div>
+            <h3>Servidor ou NAS</h3>
+            <p class="storage-sub">Equipamento na rede da empresa que guarda os arquivos de todos.</p>
+          </div>
+        </div>
+        <div class="pros">
+          <h4><svg><use href="#i-check"/></svg>Vantagens</h4>
+          <ul>
+            <li>Armazenamento centralizado em um só lugar.</li>
+            <li>Compartilhamento entre os computadores da equipe.</li>
+            <li>Mais controle sobre os dados e sobre quem acessa.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4><svg><use href="#i-alert"/></svg>Limitações</h4>
+          <ul>
+            <li>Custa mais e exige configuração e manutenção.</li>
+            <li>Fica no mesmo prédio: incêndio ou furto atingem tudo junto.</li>
+            <li>Não deve ser a única cópia; combine com nuvem ou HD externo.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. REGRA 3-2-1 ================= -->
+<section class="section section-dark" id="regra-321">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-light">Estratégia recomendada</p>
+      <h2>A regra 3-2-1</h2>
+      <p class="lead">Uma orientação simples, citada por órgãos de segurança digital, para não depender de uma única cópia. Como diz o ditado da área: <em>quem tem um, não tem nenhum</em>.</p>
+    </header>
+
+    <div class="rule-layout">
+      <div class="rule-tabs" role="tablist" aria-label="Partes da regra 3-2-1">
+        <button class="rule-tab is-active" role="tab" id="tab-3" aria-selected="true" aria-controls="rule-panel" data-mode="tres">
+          <span class="rule-num">3</span>
+          <span class="rule-label"><strong>Cópias</strong>Mantenha três versões dos dados</span>
+        </button>
+        <button class="rule-tab" role="tab" id="tab-2" aria-selected="false" aria-controls="rule-panel" data-mode="dois" tabindex="-1">
+          <span class="rule-num">2</span>
+          <span class="rule-label"><strong>Tipos</strong>Use dois tipos diferentes de armazenamento</span>
+        </button>
+        <button class="rule-tab" role="tab" id="tab-1" aria-selected="false" aria-controls="rule-panel" data-mode="um" tabindex="-1">
+          <span class="rule-num">1</span>
+          <span class="rule-label"><strong>Externa</strong>Guarde uma cópia fora da empresa</span>
+        </button>
+      </div>
+
+      <!-- Ilustração interativa da distribuição dos dados -->
+      <div class="rule-diagram" id="rule-panel" role="tabpanel" aria-live="polite" data-mode="tres">
+        <div class="zone zone-in">
+          <span class="zone-label"><svg><use href="#i-building"/></svg>Dentro da empresa</span>
+          <div class="zone-nodes">
+            <button class="node" data-node="pc" aria-describedby="node-info">
+              <span class="node-copy">Cópia 1</span>
+              <svg class="node-ico"><use href="#i-monitor"/></svg>
+              <strong>Computador</strong>
+              <small>Arquivos originais</small>
+            </button>
+            <button class="node" data-node="hd" aria-describedby="node-info">
+              <span class="node-copy">Cópia 2</span>
+              <svg class="node-ico"><use href="#i-hdd"/></svg>
+              <strong>HD externo</strong>
+              <small>Tipo 1: mídia física</small>
+            </button>
+          </div>
+        </div>
+        <div class="zone-link" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="zone zone-out">
+          <span class="zone-label"><svg><use href="#i-cloud"/></svg>Fora da empresa</span>
+          <div class="zone-nodes">
+            <button class="node" data-node="cloud" aria-describedby="node-info">
+              <span class="node-copy">Cópia 3</span>
+              <svg class="node-ico"><use href="#i-cloud"/></svg>
+              <strong>Nuvem</strong>
+              <small>Tipo 2: online, cópia externa</small>
+            </button>
+          </div>
+        </div>
+        <div class="rule-info" id="node-info">
+          <h3 id="rule-info-title">3 cópias</h3>
+          <p id="rule-info-text">O arquivo original no computador conta como a primeira cópia. As outras duas são backups. Se uma falhar, ainda resta outra.</p>
+        </div>
+      </div>
+    </div>
+    <p class="rule-hint">Toque nos números ou nos equipamentos para ver como os dados se distribuem.</p>
+  </div>
+</section>
+
+<!-- ================= 6. ROTINA DE BACKUP ================= -->
+<section class="section" id="rotina">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Rotina</p>
+      <h2>Rotina de backup recomendada</h2>
+      <p class="lead">Backup bom é backup feito sempre, de preferência de forma <strong>automática</strong>, para não depender da memória de ninguém. Clique em cada etapa para ver o que fazer.</p>
+    </header>
+
+    <div class="timeline reveal" role="tablist" aria-label="Frequência das tarefas">
+      <button class="tl-step is-active" role="tab" aria-selected="true" aria-controls="tl-panel" data-step="0">
+        <span class="tl-dot"><svg><use href="#i-copy"/></svg></span>
+        <span class="tl-when">Diariamente</span>
+        <span class="tl-what">Fazer o backup</span>
+      </button>
+      <button class="tl-step" role="tab" aria-selected="false" aria-controls="tl-panel" data-step="1" tabindex="-1">
+        <span class="tl-dot"><svg><use href="#i-search"/></svg></span>
+        <span class="tl-when">Semanalmente</span>
+        <span class="tl-what">Verificar falhas</span>
+      </button>
+      <button class="tl-step" role="tab" aria-selected="false" aria-controls="tl-panel" data-step="2" tabindex="-1">
+        <span class="tl-dot"><svg><use href="#i-restore"/></svg></span>
+        <span class="tl-when">Mensalmente</span>
+        <span class="tl-what">Testar a restauração</span>
+      </button>
+      <button class="tl-step" role="tab" aria-selected="false" aria-controls="tl-panel" data-step="3" tabindex="-1">
+        <span class="tl-dot"><svg><use href="#i-calendar"/></svg></span>
+        <span class="tl-when">A cada 3 meses</span>
+        <span class="tl-what">Revisar a estratégia</span>
+      </button>
+    </div>
+
+    <div class="tl-panel card" id="tl-panel" role="tabpanel" aria-live="polite">
+      <div class="tl-panel-head">
+        <span class="tl-freq" id="tl-freq">Diariamente</span>
+        <h3 id="tl-title">Realizar backup dos arquivos importantes e dos dados que foram modificados.</h3>
+      </div>
+      <ul class="tl-list" id="tl-list">
+        <li>Deixe o backup automático, em um horário fora do expediente.</li>
+        <li>Se usar HD externo, conecte-o para que a cópia aconteça e desconecte depois.</li>
+        <li>Antes de viagens, atualizações ou de mandar o computador para o conserto, faça também um backup manual.</li>
+      </ul>
+    </div>
+
+    <aside class="callout callout-note reveal">
+      <span class="callout-icon"><svg><use href="#i-clock"/></svg></span>
+      <div>
+        <h3>Adapte a frequência ao seu negócio</h3>
+        <p>Essas frequências são uma referência. O ritmo ideal depende do volume de dados e da importância das informações. Pergunte-se: <strong>quanto trabalho eu aceitaria perder?</strong> e <strong>por quanto tempo a empresa pode ficar parada?</strong> Se a resposta for "nem um dia", o backup precisa ser pelo menos diário.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 7. TESTE DE RESTAURAÇÃO ================= -->
+<section class="section section-alt" id="restauracao">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Recuperação</p>
+      <h2>Teste de restauração</h2>
+      <p class="lead">Fazer backup é guardar a cópia. <strong>Restaurar</strong> é conseguir usar essa cópia quando precisar. Só o teste mostra se a segunda parte funciona.</p>
+    </header>
+
+    <div class="compare reveal">
+      <div class="compare-item">
+        <span class="icon-badge"><svg><use href="#i-copy"/></svg></span>
+        <div>
+          <h3>Fazer backup</h3>
+          <p>Copiar os arquivos para outro local, de forma regular.</p>
+        </div>
+      </div>
+      <svg class="compare-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+      <div class="compare-item">
+        <span class="icon-badge icon-badge-green"><svg><use href="#i-restore"/></svg></span>
+        <div>
+          <h3>Conseguir recuperar</h3>
+          <p>Abrir a cópia, achar a versão certa e trazer o arquivo de volta, funcionando.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demonstração em etapas -->
+    <div class="demo reveal">
+      <ol class="demo-steps" id="demo-steps" aria-label="Etapas da restauração">
+        <li><button data-go="0" class="is-active" aria-current="step"><span>1</span>Arquivo perdido</button></li>
+        <li><button data-go="1"><span>2</span>Acessar o backup</button></li>
+        <li><button data-go="2"><span>3</span>Escolher a versão</button></li>
+        <li><button data-go="3"><span>4</span>Restaurar</button></li>
+        <li><button data-go="4"><span>5</span>Recuperado</button></li>
+      </ol>
+
+      <div class="demo-body">
+        <div class="demo-text" aria-live="polite">
+          <p class="demo-count" id="demo-count">Etapa 1 de 5</p>
+          <h3 id="demo-title">Um arquivo importante é perdido</h3>
+          <p id="demo-desc">O computador do escritório apresentou defeito e a planilha de vendas do mês não abre mais.</p>
+          <div class="demo-nav">
+            <button class="btn btn-outline" id="demo-prev" disabled>Anterior</button>
+            <button class="btn btn-primary" id="demo-next">Próxima etapa <svg><use href="#i-arrow-right"/></svg></button>
+          </div>
+        </div>
+
+        <div class="demo-window" aria-hidden="true">
+          <div class="win-bar"><i></i><i></i><i></i><span id="win-title">Pasta: Financeiro</span></div>
+          <div class="win-content" id="win-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="howto reveal">
+      <h3>Como fazer um teste simples</h3>
+      <ul class="howto-list">
+        <li><svg><use href="#i-check"/></svg><span>Escolha um arquivo importante e restaure-o em <strong>outra pasta</strong>, para não substituir o atual.</span></li>
+        <li><svg><use href="#i-check"/></svg><span>Abra o arquivo e confira se ele está completo e legível.</span></li>
+        <li><svg><use href="#i-check"/></svg><span>Anote quanto tempo levou. Isso mostra quanto tempo a empresa ficaria parada.</span></li>
+        <li><svg><use href="#i-check"/></svg><span>Teste tanto um arquivo isolado quanto uma pasta inteira, de vez em quando.</span></li>
+      </ul>
+    </div>
+
+    <div class="alert reveal" role="note">
+      <span class="alert-icon"><svg><use href="#i-alert"/></svg></span>
+      <p>Um backup que nunca foi testado pode não funcionar quando você mais precisar!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8. RISCOS ================= -->
+<section class="section" id="riscos">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Riscos</p>
+      <h2>Riscos de não ter backup</h2>
+      <p class="lead">Nenhum negócio está livre desses problemas. A diferença está em quem consegue se recuperar rápido.</p>
+    </header>
+
+    <div class="grid grid-3 risk-grid">
+      <article class="card risk-card reveal">
+        <span class="icon-badge icon-badge-risk"><svg><use href="#i-ransom"/></svg></span>
+        <h3>Ataques de ransomware</h3>
+        <p>Um programa malicioso bloqueia os arquivos e cobra um "resgate". Ele pode atingir também backups que estão conectados. Pagar não garante a devolução dos dados.</p>
+      </article>
+      <article class="card risk-card reveal">
+        <span class="icon-badge icon-badge-risk"><svg><use href="#i-hdd-fail"/></svg></span>
+        <h3>Falhas em HDs e SSDs</h3>
+        <p>Todo dispositivo de armazenamento pode apresentar defeito. Sem outra cópia, os dados ficam presos no equipamento estragado.</p>
+      </article>
+      <article class="card risk-card reveal">
+        <span class="icon-badge icon-badge-risk"><svg><use href="#i-trash"/></svg></span>
+        <h3>Exclusão acidental</h3>
+        <p>Um clique errado apaga ou substitui uma planilha. Em pastas sincronizadas, a exclusão pode se repetir também na nuvem.</p>
+      </article>
+      <article class="card risk-card reveal">
+        <span class="icon-badge icon-badge-risk"><svg><use href="#i-laptop"/></svg></span>
+        <h3>Roubo ou perda de equipamentos</h3>
+        <p>Notebooks, celulares e HDs externos podem ser furtados ou esquecidos. Além de perder os dados, há o risco de outra pessoa acessá-los.</p>
+      </article>
+      <article class="card risk-card reveal">
+        <span class="icon-badge icon-badge-risk"><svg><use href="#i-fire"/></svg></span>
+        <h3>Incêndios e danos físicos</h3>
+        <p>Fogo, alagamentos e outros acidentes podem destruir, de uma vez, o computador e o backup que estava guardado ao lado dele.</p>
+      </article>
+      <article class="card risk-card reveal">
+        <span class="icon-badge icon-badge-risk"><svg><use href="#i-pause"/></svg></span>
+        <h3>Interrupção das atividades</h3>
+        <p>Sem os dados, fica difícil emitir notas, atender clientes ou consultar o estoque. Cada dia parado afeta as vendas e a confiança de quem compra.</p>
+      </article>
+    </div>
+
+    <aside class="callout callout-info reveal">
+      <span class="callout-icon"><svg><use href="#i-lock"/></svg></span>
+      <div>
+        <h3>Proteja também o próprio backup</h3>
+        <p>Use criptografia nas cópias, ative a verificação em duas etapas nos serviços de nuvem, não deixe o HD externo conectado o tempo todo e mantenha sistemas e antivírus atualizados.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 9. CHECKLIST ================= -->
+<section class="section section-alt" id="checklist">
+  <div class="container narrow">
+    <header class="section-head reveal">
+      <p class="eyebrow">Autoavaliação</p>
+      <h2>Checklist de segurança</h2>
+      <p class="lead">Marque o que você já faz na sua empresa. As marcações ficam salvas apenas neste navegador.</p>
+    </header>
+
+    <div class="checklist card">
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <span id="progress-text">0 de 8 ações</span>
+          <strong id="progress-pct">0%</strong>
+        </div>
+        <div class="progress" role="progressbar" aria-labelledby="progress-text" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
+          <span class="progress-fill" id="progress-fill"></span>
+        </div>
+        <p class="progress-msg" id="progress-msg">Comece pelo primeiro item: saber o que proteger.</p>
+      </div>
+
+      <ul class="check-list" id="check-list">
+        <li><input type="checkbox" id="c1"><label for="c1"><span class="box"><svg><use href="#i-check"/></svg></span>Identifiquei os dados mais importantes da empresa.</label></li>
+        <li><input type="checkbox" id="c2"><label for="c2"><span class="box"><svg><use href="#i-check"/></svg></span>Escolhi onde armazenar meus backups.</label></li>
+        <li><input type="checkbox" id="c3"><label for="c3"><span class="box"><svg><use href="#i-check"/></svg></span>Tenho mais de uma cópia dos arquivos.</label></li>
+        <li><input type="checkbox" id="c4"><label for="c4"><span class="box"><svg><use href="#i-check"/></svg></span>Mantenho uma cópia fora da empresa.</label></li>
+        <li><input type="checkbox" id="c5"><label for="c5"><span class="box"><svg><use href="#i-check"/></svg></span>Configurei uma rotina automática de backup.</label></li>
+        <li><input type="checkbox" id="c6"><label for="c6"><span class="box"><svg><use href="#i-check"/></svg></span>Verifico regularmente se os backups estão funcionando.</label></li>
+        <li><input type="checkbox" id="c7"><label for="c7"><span class="box"><svg><use href="#i-check"/></svg></span>Realizo testes de restauração.</label></li>
+        <li><input type="checkbox" id="c8"><label for="c8"><span class="box"><svg><use href="#i-check"/></svg></span>Protejo meus backups com senhas e controle de acesso.</label></li>
+      </ul>
+
+      <button class="btn btn-text" id="check-reset" type="button">Limpar marcações</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10. CONCLUSÃO ================= -->
+<section class="conclusion" id="conclusao">
+  <div class="container conclusion-inner reveal">
+    <span class="conclusion-mark"><svg><use href="#i-shield-check"/></svg></span>
+    <h2>A segurança dos dados não é um luxo, é uma necessidade para qualquer empresa!</h2>
+    <p>Pequenas atitudes podem evitar grandes prejuízos. Comece hoje a proteger as informações do seu negócio.</p>
+    <a class="btn btn-primary btn-lg" href="#inicio"><svg><use href="#i-arrow-up"/></svg>Voltar ao início</a>
+  </div>
+</section>
+
+<!-- ================= REFERÊNCIAS ================= -->
+<section class="section refs" id="referencias">
+  <div class="container narrow">
+    <header class="section-head">
+      <p class="eyebrow">Fontes</p>
+      <h2>Referências</h2>
+      <p class="lead">O conteúdo deste guia foi baseado nas orientações destes órgãos e materiais oficiais.</p>
+    </header>
+    <ol class="ref-list">
+      <li><span>CERT.br / NIC.br. <em>Fascículo Backup</em>, Cartilha de Segurança para Internet, 2023.</span> <a href="https://cartilha.cert.br/fasciculos/#backup" target="_blank" rel="noopener">cartilha.cert.br <svg><use href="#i-external"/></svg></a></li>
+      <li><span>CERT.br / NIC.br. <em>Ransomware</em>, Cartilha de Segurança para Internet.</span> <a href="https://cartilha.cert.br/ransomware/" target="_blank" rel="noopener">cartilha.cert.br/ransomware <svg><use href="#i-external"/></svg></a></li>
+      <li><span>CISA (Agência de Segurança Cibernética dos EUA). <em>Back Up Business Data</em>.</span> <a href="https://www.cisa.gov/back-business-data" target="_blank" rel="noopener">cisa.gov <svg><use href="#i-external"/></svg></a></li>
+      <li><span>CISA. <em>#StopRansomware Guide</em>.</span> <a href="https://www.cisa.gov/stopransomware/ransomware-guide" target="_blank" rel="noopener">cisa.gov/stopransomware <svg><use href="#i-external"/></svg></a></li>
+      <li><span>NIST / NCCoE. <em>Protecting Your Data from Ransomware and Other Data Loss Events</em>.</span> <a href="https://www.nccoe.nist.gov/sites/default/files/library/supplemental-files/msp-protecting-data-one-pager.pdf" target="_blank" rel="noopener">nccoe.nist.gov <svg><use href="#i-external"/></svg></a></li>
+      <li><span>NCSC (Centro Nacional de Cibersegurança do Reino Unido). <em>Small organisations guide: Backing up your data</em>.</span> <a href="https://www.ncsc.gov.uk/collection/small-organisations-guide-to-cyber-security/1-backing-up-your-data" target="_blank" rel="noopener">ncsc.gov.uk <svg><use href="#i-external"/></svg></a></li>
+      <li><span>FTC (Comissão Federal de Comércio dos EUA). <em>Cybersecurity Basics</em> para pequenas empresas.</span> <a href="https://www.ftc.gov/system/files/attachments/cybersecurity-basics/cybersecurity_sb_cyber-basics.pdf" target="_blank" rel="noopener">ftc.gov <svg><use href="#i-external"/></svg></a></li>
+      <li><span>Microsoft Suporte. <em>Restaurar arquivos do OneDrive</em> (lixeira e histórico de versões).</span> <a href="https://support.microsoft.com/pt-BR/onedrive/restore-your-onedrive-files" target="_blank" rel="noopener">support.microsoft.com <svg><use href="#i-external"/></svg></a></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= RODAPÉ ================= -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <a class="brand brand-footer" href="#inicio">
+        <span class="brand-mark"><svg><use href="#i-shield-check"/></svg></span>
+        <span class="brand-name">Backup <strong>em Dia</strong></span>
+      </a>
+      <p>Projeto educativo sobre backup e recuperação de dados para pequenas empresas, comerciantes e MEIs. Site informativo, sem coleta de dados e sem fins comerciais.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Links do rodapé">
+      <h4>Navegue</h4>
+      <a href="#o-que-e">O que é backup</a>
+      <a href="#regra-321">Regra 3-2-1</a>
+      <a href="#rotina">Rotina de backup</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#referencias">Referências</a>
+    </nav>
+    <div class="footer-note">
+      <h4>Aviso</h4>
+      <p>As orientações são gerais. Para sistemas complexos ou dados sensíveis, procure um profissional de TI de confiança.</p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>Backup em Dia · Proteja hoje os dados do seu negócio para não perder tudo amanhã.</p>
+  </div>
+</footer>
+
+<a href="#inicio" class="to-top" id="to-top" aria-label="Voltar ao topo"><svg><use href="#i-arrow-up"/></svg></a>
+
+<script src="js/script.js"></script>
+</body>
+</html>
